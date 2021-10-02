@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const usersRouter = require('./users/index');
-const coursesRouter = require('./courses/index');
+const usersRouter = require('./users/users');
+const coursesRouter = require('./courses/courses');
 
 /* GET /api */
 router.get('/', async (req, res, next) => {

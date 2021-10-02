@@ -8,12 +8,13 @@ const { User } = require(path.join(process.cwd(), 'models/index'));
 
 // helpers
 const asyncHandler = require('express-async-handler');
+const { authenticateUser } = require(path.join(process.cwd(), 'middleware/authenticateUser'));
 
 // GET /api/users
 // return all properties and values for the currently authenticated User
-router.get('/', async (req, res, next) => {
-  const allUsers = await User.findAll({ raw: true });
-  res.json(allUsers);
+router.get('/', authenticateUser, async (req, res, next) => {
+  const { user } = req;
+  res.json(user);
 });
 
 // POST /api/users
@@ -33,8 +34,10 @@ router.post(
       });
 
       // if successful
-      res.status(201).end();
+      res.location('/').status(201).end();
     } catch (err) {
+      err.status = 409;
+      err.message = 'User already exists';
       next(err);
     }
   }),

@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // db module
-const { Course } = require(path.join(process.cwd(), 'models/index'));
+const { Course, User } = require(path.join(process.cwd(), 'models/index'));
 
 // helpers
 const asyncHandler = require('express-async-handler');
@@ -13,7 +13,14 @@ const asyncHandler = require('express-async-handler');
 // returns a single course based on the request id parameter
 router.get('/:id', async (req, res, next) => {
   const id = req.params.id;
-  const course = await Course.findByPk(id);
+  const course = await Course.findByPk(id, {
+    include: [
+      {
+        model: User,
+        attributes: ['firstName', 'lastName', 'emailAddress'],
+      },
+    ],
+  });
 
   // if course does not exist, reply with an error
   if (course) {
