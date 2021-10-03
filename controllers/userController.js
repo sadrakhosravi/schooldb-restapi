@@ -6,7 +6,15 @@ const { User } = require('../models');
 // Helpers
 const asyncHandler = require('express-async-handler');
 
-// Creates a new user. POST Method
+/// USERS CONTROLLER - LOGIC ///
+
+// GET method - get the authenticated user
+exports.getAuthenticatedUser = async (req, res) => {
+  const { user } = req;
+  res.json(user);
+};
+
+// POST method - creates a new user in the database
 exports.createUser = asyncHandler(async (req, res, next) => {
   const { firstName, lastName, emailAddress, password } = req.body;
 
