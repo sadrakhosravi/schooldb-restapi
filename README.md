@@ -3,7 +3,6 @@ A REST API built with express and NodeJS for a school database. This API will pr
 
 ## Usage
 * Clone the repo
-* npm
 * Install Dependencies
   ```sh
   npm install
