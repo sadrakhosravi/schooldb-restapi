@@ -6,6 +6,9 @@ const dbController = require('./dbController');
 // Helpers
 const asyncHandler = require('../helpers/asyncHandler');
 
+// Require Bcryptjs
+const bcrypt = require('bcryptjs');
+
 /// USERS CONTROLLER - LOGIC ///
 
 // GET METHODS
@@ -22,6 +25,8 @@ exports.getAuthenticatedUser = async (req, res) => {
 // POST METHODS
 // POST method - creates a new user in the database
 exports.createUser = asyncHandler(async (req, res, next) => {
+  // Hash users password before saving it to the db
+  req.body.password = await bcrypt.hash(req.body.password, 10);
   // Try to create the user, if fail, throw an error
   const user = await dbController.createUser(req.body);
   // If successful

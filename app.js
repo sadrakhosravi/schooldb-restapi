@@ -45,15 +45,15 @@ app.use((err, req, res, next) => {
   });
 });
 
-// set our port
+// Set app port
 app.set('port', process.env.PORT || 5000);
 
-// start listening on our port
+// Start listening on our port
 const server = app.listen(app.get('port'), () => {
   console.log(`Express server is listening on port ${server.address().port}`);
 });
 
-// check db connection
+// Check db connection
 (async () => {
   try {
     await sequelize.authenticate();
