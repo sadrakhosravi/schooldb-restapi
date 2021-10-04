@@ -8,6 +8,9 @@ const { Course, User } = require('../models');
 // Find all courses
 exports.getAllCourses = async () => {
   return await Course.findAll({
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
     include: [
       {
         model: User,
@@ -20,6 +23,9 @@ exports.getAllCourses = async () => {
 // Find a single course
 exports.getCourseById = async id => {
   return await Course.findByPk(id, {
+    attributes: {
+      exclude: ['createdAt', 'updatedAt'],
+    },
     include: [
       {
         model: User,

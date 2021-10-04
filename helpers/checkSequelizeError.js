@@ -16,7 +16,7 @@ module.exports = error => {
 
   if (error.name === 'SequelizeUniqueConstraintError') {
     errorObj.message = error.errors.map(err => err.message);
-    errorObj.status = 409;
+    errorObj.status = 400;
     errorObj.type = 'Unique Constraint Error';
     errorObj.fields = error.fields;
     return errorObj;

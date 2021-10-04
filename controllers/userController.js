@@ -12,8 +12,12 @@ const checkSequelizeError = require('../helpers/checkSequelizeError');
 // GET METHODS
 // GET method - get the authenticated user
 exports.getAuthenticatedUser = async (req, res) => {
-  const { user } = req;
-  res.json(user);
+  const { firstName, lastName, emailAddress } = req.user;
+  res.json({
+    firstName,
+    lastName,
+    emailAddress,
+  });
 };
 
 // POST METHODS
