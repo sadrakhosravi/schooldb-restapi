@@ -1,21 +1,15 @@
 'use strict';
 
-// load modules
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const auth = require('basic-auth');
 
-// db model
+// DB Models
 const { User } = require(path.join(__dirname, '../models/index'));
 
-/**
- *
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- * @param {Function} next - Express next function that gets called to run the next middleware
- */
+// Checks the submitted user authentication and validates it
 module.exports = async (req, res, next) => {
-  // parse user's credential from the Authorization header
+  // Parse user's credential from the Authorization header
   const credential = auth(req);
 
   let message = '';
@@ -23,11 +17,11 @@ module.exports = async (req, res, next) => {
   if (credential) {
     const user = await User.findOne({ where: { emailAddress: credential.name }, raw: true });
 
-    // if user exits, check their password
+    // If user exits, check their password
     if (user) {
       const isAuthenticated = bcrypt.compareSync(credential.pass, user.password);
 
-      // if user's password is valid
+      // If user's password is valid
       if (isAuthenticated) {
         req.user = user;
       } else {
@@ -40,7 +34,7 @@ module.exports = async (req, res, next) => {
     message = 'No authentication found.';
   }
 
-  // if an error has occurred throw an error, else continue with the user
+  // If an error has occurred throw an error, else continue with the user
   if (message) {
     const err = new Error(message + ' Access denied!');
     err.status = 401;
