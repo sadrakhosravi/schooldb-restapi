@@ -1,17 +1,17 @@
 {
-  "name": "techdegree-fullstackjs-rest-api",
+  "name": "school-db-rest-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A REST API to manage a school database containing users and courses",
   "main": "app.js",
   "scripts": {
     "start": "nodemon ./app.js",
     "seed": "cross-env DB_ENABLE_LOGGING=true node './seed'"
   },
   "keywords": [],
-  "author": "",
+  "author": "Sadra Khosravi",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.13",
     "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
@@ -19,9 +19,7 @@
     "bcryptjs": "^2.4.3",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
-    "express-async-handler": "^1.1.4",
     "morgan": "^1.10.0",
-    "promise.prototype.finally": "^3.1.2",
     "sequelize": "^6.6.5",
     "sqlite3": "^5.0.2"
   }
