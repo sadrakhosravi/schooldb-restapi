@@ -1,14 +1,28 @@
 'use strict';
 
-/**
- * Checks if the error was thrown by sequelize and responds accordingly.
- * @param {Object} error
- */
+// Check if the error is related to sequelize and decide based
+// on the sequelize error type
 module.exports = error => {
-  if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeForeignKeyConstraintError') {
-    error.status = 400;
-    return error;
-  } else {
-    return error;
+  // Create the error object to be returned
+  let errorObj = {};
+
+  // Check if there is any validation errors
+  if (error.name === 'SequelizeValidationError') {
+    errorObj.message = error.errors.map(err => err.message);
+    errorObj.status = 404;
+    errorObj.type = 'Validation Error';
+    return errorObj;
   }
+
+  if (error.name === 'SequelizeUniqueConstraintError') {
+    errorObj.message = error.errors.map(err => err.message);
+    errorObj.status = 409;
+    errorObj.type = 'Unique Constraint Error';
+    errorObj.fields = error.fields;
+    return errorObj;
+  }
+
+  // If non of the error above have occurred, send back the original error
+  errorObj = error;
+  return errorObj;
 };

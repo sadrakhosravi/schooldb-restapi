@@ -44,6 +44,7 @@ exports.authenticateUser = async (req, res, next) => {
   if (message) {
     const err = new Error(message + ' Access denied!');
     err.status = 401;
+    err.type = 'Authentication Error';
     next(err);
   } else {
     next();

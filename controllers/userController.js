@@ -1,10 +1,11 @@
 'use strict';
 
-// DB module
-const { User } = require('../models');
+// DB Controller
+const dbController = require('./dbController');
 
 // Helpers
 const asyncHandler = require('express-async-handler');
+const checkSequelizeError = require('../helpers/checkSequelizeError');
 
 /// USERS CONTROLLER - LOGIC ///
 
@@ -18,23 +19,15 @@ exports.getAuthenticatedUser = async (req, res) => {
 // POST METHODS
 // POST method - creates a new user in the database
 exports.createUser = asyncHandler(async (req, res, next) => {
-  const { firstName, lastName, emailAddress, password } = req.body;
-
   // Try to create the user, if fail, throw an error
   try {
-    await User.create({
-      firstName,
-      lastName,
-      emailAddress,
-      password,
-    });
+    const user = await dbController.createUser(req.body);
 
     // If successful
     res.location('/').status(201).end();
   } catch (err) {
-    err.status = 409;
-    err.message = 'User already exists';
-    next(err);
+    const error = checkSequelizeError(err);
+    next(error);
   }
 });
 

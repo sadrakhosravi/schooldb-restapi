@@ -28,6 +28,7 @@ exports.getCourse = async (req, res, next) => {
   } else {
     const err = new Error('Course does not exist');
     err.status = 404;
+    err.type = 'Not Found';
     next(err);
   }
 };
@@ -41,7 +42,6 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
     res.location(`/courses/${course.id}`).status(201).end();
   } catch (err) {
     const error = checkSequelizeError(err);
-    console.log(error);
     next(error);
   }
 });
@@ -56,7 +56,6 @@ exports.updateCourse = asyncHandler(async (req, res, next) => {
     res.status(204).end();
   } catch (err) {
     const error = checkSequelizeError(err);
-    console.log(error);
     next(error);
   }
 });
@@ -70,7 +69,6 @@ exports.deleteCourse = asyncHandler(async (req, res, next) => {
     res.status(204).end();
   } catch (err) {
     const error = checkSequelizeError(err);
-    console.log(error);
     next(error);
   }
 });

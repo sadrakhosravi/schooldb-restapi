@@ -53,3 +53,6 @@ exports.deleteCourse = async id => {
 };
 
 /// USER DB LOGIC ///
+
+// Create a new user
+exports.createUser = async userData => await User.create(userData);

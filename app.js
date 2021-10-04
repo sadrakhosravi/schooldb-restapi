@@ -36,8 +36,12 @@ app.use((err, req, res, next) => {
   }
 
   res.status(err.status || 500).json({
-    message: err.message,
-    error: {},
+    error: {
+      type: err.type,
+      message: err.message,
+      status: err.status,
+      fields: err.fields,
+    },
   });
 });
 
