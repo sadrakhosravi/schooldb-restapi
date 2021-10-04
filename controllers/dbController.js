@@ -41,21 +41,13 @@ exports.createCourse = async courseData => {
 };
 
 // Update a course
-exports.updateCourse = async (updatedData, id) => {
-  return await Course.update(updatedData, {
-    where: {
-      id: id,
-    },
-  });
+exports.updateCourse = async (course, courseData) => {
+  await course.update(courseData);
 };
 
 // Delete a course
-exports.deleteCourse = async id => {
-  return await Course.destroy({
-    where: {
-      id: id,
-    },
-  });
+exports.deleteCourse = async course => {
+  await course.destroy();
 };
 
 /// USER DB LOGIC ///

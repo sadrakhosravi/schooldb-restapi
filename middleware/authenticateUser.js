@@ -14,7 +14,7 @@ const { User } = require(path.join(__dirname, '../models/index'));
  * @param {Object} res - Express response object
  * @param {Function} next - Express next function that gets called to run the next middleware
  */
-exports.authenticateUser = async (req, res, next) => {
+module.exports = async (req, res, next) => {
   // parse user's credential from the Authorization header
   const credential = auth(req);
 

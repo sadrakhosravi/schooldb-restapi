@@ -8,7 +8,8 @@ const router = express.Router();
 const courseController = require('../../controllers/courseController');
 
 // Helpers & middleware
-const { authenticateUser } = require('../../middleware/authenticateUser');
+const authenticateUser = require('../../middleware/authenticateUser');
+const checkCourseOwner = require('../../middleware/checkCourseOwner');
 
 // GET request for retrieving all courses in the db
 router.get('/courses', courseController.getCourses);
@@ -20,9 +21,9 @@ router.post('/courses', authenticateUser, courseController.createCourse);
 router.get('/courses/:id', courseController.getCourse);
 
 // PUT request for updating a single course based on the id
-router.put('/courses/:id', authenticateUser, courseController.updateCourse);
+router.put('/courses/:id', authenticateUser, checkCourseOwner, courseController.updateCourse);
 
 // PUT request for updating a single course based on the id
-router.delete('/courses/:id', authenticateUser, courseController.deleteCourse);
+router.delete('/courses/:id', authenticateUser, checkCourseOwner, courseController.deleteCourse);
 
 module.exports = router;

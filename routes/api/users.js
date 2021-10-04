@@ -8,7 +8,7 @@ const router = express.Router();
 const userController = require('../../controllers/userController');
 
 // Require middleware
-const { authenticateUser } = require('../../middleware/authenticateUser');
+const authenticateUser = require('../../middleware/authenticateUser');
 
 /// API USERS ROUTES ///
 

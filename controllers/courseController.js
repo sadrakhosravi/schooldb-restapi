@@ -43,27 +43,14 @@ exports.createCourse = asyncHandler(async (req, res, next) => {
 // PUT METHODS
 // PUT method - update a course by its id
 exports.updateCourse = asyncHandler(async (req, res, next) => {
-  await dbController.updateCourse(req.body, req.params.id);
+  await dbController.updateCourse(req.course, req.body);
   // If successful, redirect to the new course created
   res.status(204).end();
 });
 
 // DELETE METHODS
 exports.deleteCourse = asyncHandler(async (req, res, next) => {
-  const authenticatedUserId = req.user.id;
-  const courseId = req.params.id;
-  const course = await dbController.getCourseById(courseId);
-
-  // If the authenticated user is not the owner of the course throw an authentication error
-  if (course.userId !== authenticatedUserId) {
-    const error = new Error();
-    error.type = 'Authentication Error';
-    error.message = ['Access denied! You are not the owner of the course'];
-    error.status = 403;
-    next(error);
-  } else {
-    // Delete the course and send the response
-    course.destroy();
-    res.status(204).end();
-  }
+  // Delete the course if the user is authenticated and the owner
+  await dbController.deleteCourse(req.course);
+  res.status(204).end();
 });
