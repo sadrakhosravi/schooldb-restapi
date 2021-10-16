@@ -25,10 +25,16 @@ exports.getAuthenticatedUser = async (req, res) => {
 // POST METHODS
 // POST method - creates a new user in the database
 exports.createUser = asyncHandler(async (req, res, next) => {
-  // Hash users password before saving it to the db
-  req.body.password = await bcrypt.hash(req.body.password, 10);
+  // Hash users password, if give, before saving it to the db
+  if (req.body.password) {
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+  }
+
+  console.log(req.body.password);
   // Try to create the user, if fail, throw an error
   const user = await dbController.createUser(req.body);
+
+  console.log(user);
   // If successful
   res.location('/').status(201).end();
 });

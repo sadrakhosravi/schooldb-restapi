@@ -9,13 +9,15 @@ module.exports = error => {
   // Check if there is any validation errors
   if (error.name === 'SequelizeValidationError') {
     errorObj.message = error.errors.map(err => err.message);
-    errorObj.status = 404;
+    errorObj.fields = error.errors.map(err => err.path);
+    errorObj.status = 400;
     errorObj.type = 'Validation Error';
     return errorObj;
   }
 
   if (error.name === 'SequelizeUniqueConstraintError') {
     errorObj.message = error.errors.map(err => err.message);
+    errorObj.fields = error.errors.map(err => err.path);
     errorObj.status = 400;
     errorObj.type = 'Unique Constraint Error';
     errorObj.fields = error.fields;
