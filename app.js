@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 
 // CORS to allow requests only from the React app
-app.use(cors());
+app.use(cors);
 
 // Setup morgan which gives us http request logging
 app.use(morgan('dev'));
