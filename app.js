@@ -5,6 +5,7 @@ const express = require('express');
 const morgan = require('morgan');
 const { sequelize } = require(path.join(__dirname, './models/index'));
 const router = require(path.join(__dirname, './routes/index'));
+const cors = require('./middleware/cors');
 
 // Variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
@@ -14,6 +15,9 @@ const app = express();
 
 // Use express json body parser
 app.use(express.json());
+
+// CORS to allow requests only from the React app
+app.use(cors());
 
 // Setup morgan which gives us http request logging
 app.use(morgan('dev'));
