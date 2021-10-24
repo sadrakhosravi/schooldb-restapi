@@ -14,8 +14,9 @@ const bcrypt = require('bcryptjs');
 // GET METHODS
 // GET method - get the authenticated user
 exports.getAuthenticatedUser = async (req, res) => {
-  const { firstName, lastName, emailAddress } = req.user;
+  const { id, firstName, lastName, emailAddress } = req.user;
   res.json({
+    id,
     firstName,
     lastName,
     emailAddress,
