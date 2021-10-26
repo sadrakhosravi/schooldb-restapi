@@ -36,7 +36,7 @@ module.exports = async (req, res, next) => {
 
   // If an error has occurred throw an error, else continue with the user
   if (message) {
-    const err = new Error(message + ' Access denied!');
+    const err = new Error(message);
     err.status = 401;
     err.type = 'Authentication Error';
     next(err);

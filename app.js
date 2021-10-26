@@ -16,6 +16,9 @@ const app = express();
 // Allowing CORS
 app.use(cors());
 
+// Use body parse
+app.use(express.json());
+
 // Setup morgan which gives us http request logging
 app.use(morgan('dev'));
 
